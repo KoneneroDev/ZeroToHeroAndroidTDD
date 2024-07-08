@@ -24,11 +24,11 @@ class MainActivity : AppCompatActivity() {
 
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
-        outState.putBoolean("visibility", false)
+        outState.putInt("key", View.INVISIBLE)
     }
 
     override fun onRestoreInstanceState(savedInstanceState: Bundle) {
         super.onRestoreInstanceState(savedInstanceState)
-        textView.visibility  = if (savedInstanceState.getBoolean("visibility")) View.VISIBLE else View.INVISIBLE
+        textView.visibility  = savedInstanceState.getInt("key")
     }
 }
