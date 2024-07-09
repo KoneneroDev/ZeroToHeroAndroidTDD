@@ -5,8 +5,10 @@ import android.os.Bundle
 import android.widget.Button
 import android.widget.LinearLayout
 import android.widget.TextView
+import java.io.Serializable
 
 class MainActivity : AppCompatActivity() {
+    private var state : State = State.Initial
     private lateinit var textView: TextView
     private lateinit var linearLayout: LinearLayout
     private lateinit var button: Button
@@ -19,19 +21,34 @@ class MainActivity : AppCompatActivity() {
         button = findViewById(R.id.removeButton)
 
         button.setOnClickListener{
-            linearLayout.removeView(textView)
-            button.isEnabled = false
+            state = State.Remove
+            state.applay(linearLayout, textView, button)
         }
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
-        outState.putBoolean("BUTTON", button.isEnabled)
+        outState.putSerializable("STATE", state)
     }
 
     override fun onRestoreInstanceState(savedInstanceState: Bundle) {
         super.onRestoreInstanceState(savedInstanceState)
-        linearLayout.removeView(textView)
-        button.isEnabled = savedInstanceState.getBoolean("BUTTON")
+        state = savedInstanceState.getSerializable("STATE") as State
+        state.applay(linearLayout, textView, button)
+    }
+
+    interface State : Serializable {
+        fun applay(linearLayout: LinearLayout, textView: TextView, button: Button)
+
+        object Initial : State {
+            override fun applay(linearLayout: LinearLayout, textView: TextView, button: Button) = Unit
+        }
+
+        object Remove : State {
+            override fun applay(linearLayout: LinearLayout, textView: TextView, button: Button) {
+                linearLayout.removeView(textView)
+                button.isEnabled = false
+            }
+        }
     }
 }
