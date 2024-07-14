@@ -77,7 +77,7 @@ private interface FakeBundleWrapper : BundleWrapper.Mutable {
     }
 }
 
-private interface FakeLiveDataWrapper : LiveDataWrapper {
+private interface FakeLiveDataWrapper: LiveDataWrapper {
 
     fun checkUpdateCalls(expected: List<UiState>)
 
@@ -103,7 +103,7 @@ private interface FakeLiveDataWrapper : LiveDataWrapper {
     }
 }
 
-private interface FakeRepository : Repository {
+private interface FakeRepository: Repository {
 
     fun checkLoadCalledTimes(times: Int)
 
