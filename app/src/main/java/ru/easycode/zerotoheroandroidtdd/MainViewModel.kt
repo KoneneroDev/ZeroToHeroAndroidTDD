@@ -9,7 +9,10 @@ class MainViewModel(
     private val liveDataWrapper: LiveDataWrapper,
     private val repository: Repository
 ) {
+
     private val viewModelScope = CoroutineScope(SupervisorJob() + Dispatchers.Main.immediate)
+
+    fun liveData() = liveDataWrapper.liveData()
 
     fun load() {
         liveDataWrapper.update(UiState.ShowProgress)
@@ -18,7 +21,5 @@ class MainViewModel(
             liveDataWrapper.update(UiState.ShowData)
         }
     }
-
-    fun getLiveData() = liveDataWrapper.liveData()
 
 }

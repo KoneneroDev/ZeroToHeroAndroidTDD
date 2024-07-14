@@ -8,8 +8,6 @@ import android.widget.TextView
 
 class MainActivity : AppCompatActivity() {
 
-    private val viewModel = MainViewModel(LiveDataWrapper.Base(), Repository.Base)
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -22,8 +20,12 @@ class MainActivity : AppCompatActivity() {
             viewModel.load()
         }
 
-        viewModel.getLiveData().observe(this){
+        viewModel.liveData().observe(this){
             it.apply(button, progressBar, textView)
         }
+    }
+
+    companion object Model {
+        private val viewModel = MainViewModel(LiveDataWrapper.Base(), Repository.Base)
     }
 }
