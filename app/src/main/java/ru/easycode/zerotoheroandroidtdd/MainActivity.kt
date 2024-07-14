@@ -12,6 +12,8 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        val viewModel = (application as App).viewModel
+
         val textView = findViewById<TextView>(R.id.titleTextView)
         val button = findViewById<Button>(R.id.actionButton)
         val progressBar = findViewById<ProgressBar>(R.id.progressBar)
@@ -25,7 +27,4 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    companion object Model {
-        private val viewModel = MainViewModel(LiveDataWrapper.Base(), Repository.Base)
-    }
 }
