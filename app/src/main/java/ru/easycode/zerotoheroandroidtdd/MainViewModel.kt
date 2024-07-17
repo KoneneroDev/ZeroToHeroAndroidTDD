@@ -2,6 +2,7 @@ package ru.easycode.zerotoheroandroidtdd
 
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.launch
 
 class MainViewModel(
@@ -9,7 +10,7 @@ class MainViewModel(
     private val repository: Repository
 ) {
 
-    private val coroutine = CoroutineScope(Dispatchers.Main.immediate)
+    private val coroutine = CoroutineScope(SupervisorJob() + Dispatchers.Main.immediate)
 
     fun liveData() = liveDataWrapper.liveData()
 
@@ -21,9 +22,7 @@ class MainViewModel(
     }
 
     fun save(bundleWrapper: BundleWrapper.Save) {
-        liveDataWrapper.liveData().value?.let {
-            bundleWrapper.save(it)
-        }
+        liveDataWrapper.save(bundleWrapper)
     }
 
     fun restore(bundleWrapper: BundleWrapper.Restore) {
