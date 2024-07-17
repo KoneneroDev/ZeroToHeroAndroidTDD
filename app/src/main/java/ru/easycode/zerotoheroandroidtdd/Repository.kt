@@ -13,18 +13,10 @@ interface Repository {
 
         override suspend fun load(): LoadResult {
             try {
-
                 val result =  service.fetch(url)
                 return LoadResult.Success(data = result)
-
-            } catch (ex : UnknownHostException) {
-
-                return LoadResult.Error(true)
-
             } catch (ex : Exception) {
-
-                return LoadResult.Error(false)
-
+                return LoadResult.Error(ex is UnknownHostException)
             }
         }
 
